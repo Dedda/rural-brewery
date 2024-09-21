@@ -1,8 +1,8 @@
 package main
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
-    "log"
+	"github.com/hajimehoshi/ebiten/v2"
+	"log"
 )
 
 const (
@@ -12,7 +12,7 @@ const (
 
 func main() {
 	ebiten.SetWindowSize(screenWidth, screenHeight)
-	ebiten.SetWindowTitle("Rural Brewery")
+	ebiten.SetWindowTitle("🍺 Rural Brewery")
 	game, _ := NewGameWrapper()
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)

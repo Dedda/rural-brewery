@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/text/v2"
+	"image/color"
 )
 
 const (
-	splashScreenTime = 5 * 60
+	splashScreenTime = 2 * 60
 )
 
 type SplashScreen struct {
@@ -23,12 +23,21 @@ func NewSplashScreen() (*SplashScreen, error) {
 func (s *SplashScreen) Update() (GameState, error) {
 	s.remainingTime--
 	if s.remainingTime == 0 {
-		fmt.Println("Entering main menu...")
 		return NewMainMenu()
 	}
 	return nil, nil
 }
 
 func (s *SplashScreen) Draw(screen *ebiten.Image) {
-
+	yStep := float64(gameHeight-100) / splashScreenTime
+	y := 100 + yStep*float64(s.remainingTime)
+	headerText := "Rural Brewery"
+	headerFace := &text.GoTextFace{
+		Source: JacquardaBastarda9FaceSource,
+		Size:   mainMenuHeaderSize,
+	}
+	op := &text.DrawOptions{}
+	op.GeoM.Translate(CenterTextHorizontally(&headerText, headerFace, gameWidth), y)
+	op.ColorScale.ScaleWithColor(color.White)
+	text.Draw(screen, headerText, headerFace, op)
 }
