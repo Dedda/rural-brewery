@@ -14,6 +14,8 @@ type World struct {
 func LoadWorld() (*World, error) {
 	maps := make(map[string]WorldMap)
 	maps["home"] = NewMapHome()
+	maps["backyard"] = NewMapBackyard()
+	maps["brewery"] = NewMapBrewery()
 	return &World{
 		maps: maps,
 	}, nil

@@ -2,15 +2,8 @@ package main
 
 import "github.com/hajimehoshi/ebiten/v2"
 
-type MapHome struct {
-}
-
-func NewMapHome() *MapHome {
-	return &MapHome{}
-}
-
-func (m MapHome) BaseInfo() *WorldMapBaseData {
-	return &WorldMapBaseData{
+var (
+	homeData = WorldMapBaseData{
 		id:   "home",
 		name: "Home",
 		size: Vec2F{
@@ -19,12 +12,21 @@ func (m MapHome) BaseInfo() *WorldMapBaseData {
 		},
 		teleporters: []Teleporter{},
 	}
+)
+
+type MapHome struct {
+}
+
+func NewMapHome() *MapHome {
+	return &MapHome{}
+}
+
+func (m MapHome) BaseInfo() *WorldMapBaseData {
+	return &homeData
 }
 
 func (m MapHome) Update(g *Game, current bool) error {
 	return nil
 }
 
-func (m MapHome) Draw(screen *ebiten.Image, g *Game) {
-
-}
+func (m MapHome) Draw(screen *ebiten.Image, g *Game) {}
