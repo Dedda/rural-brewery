@@ -5,10 +5,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-const (
-	GridCellSize = 16
-)
-
 type GlobalPosition struct {
 	mapId    string
 	position Vec2F

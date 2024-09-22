@@ -1,8 +1,13 @@
 package main
 
 import (
+	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 	"math"
+)
+
+const (
+	GridCellSize = 16
 )
 
 type Vec2F struct {
@@ -25,6 +30,27 @@ func (v Vec2F) Length() float64 {
 func (v Vec2F) Normalize() Vec2F {
 	length := v.Length()
 	return Vec2F{v.X / length, v.Y / length}
+}
+
+func (v Vec2F) ToB2D() box2d.B2Vec2 {
+	return box2d.B2Vec2{
+		X: v.X,
+		Y: v.Y,
+	}
+}
+
+func Vec2FFromB2Vec2(b box2d.B2Vec2) Vec2F {
+	return Vec2F{
+		X: b.X,
+		Y: b.Y,
+	}
+}
+
+func GridCellOffset(x, y int) Vec2F {
+	return Vec2F{
+		X: float64(x) * GridCellSize,
+		Y: float64(y) * GridCellSize,
+	}
 }
 
 func ScreenCenter() Vec2F {

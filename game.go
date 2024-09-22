@@ -32,6 +32,8 @@ func (g *Game) CurrentMap() (WorldMap, error) {
 }
 
 func (g *Game) Update() (GameState, error) {
+	g.b2dWorld.Step(1.0/60, 8, 3)
+	g.player.location.position = Vec2FFromB2Vec2(g.player.body.GetPosition())
 	g.calendar.Update()
 	for id, m := range g.world.maps {
 		err := m.Update(g, id == g.player.location.mapId)
@@ -43,8 +45,8 @@ func (g *Game) Update() (GameState, error) {
 }
 
 func (g *Game) HandleInput() (GameState, error) {
-	playerMovement := GetPlayerMovementInput().MulF64(playerBaseSpeed)
-	g.player.location.position = g.player.location.position.AddVec2F(playerMovement)
+	playerMovement := GetPlayerMovementInput().MulF64(playerBaseSpeed).MulF64(60)
+	g.player.body.SetLinearVelocity(playerMovement.ToB2D())
 	return nil, nil
 }
 
@@ -63,7 +65,7 @@ func (g *Game) DrawBackground(screen *ebiten.Image) {
 }
 
 func (g *Game) DrawPlayer(screen *ebiten.Image) {
-	position := g.player.location.position
+	position := g.player.body.GetPosition()
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(position.X, position.Y)
 	screen.DrawImage(assets.PlayerImage, op)
