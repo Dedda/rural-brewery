@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -21,6 +22,14 @@ type MapBackyard struct {
 
 func NewMapBackyard() *MapBackyard {
 	return &MapBackyard{}
+}
+
+func (m *MapBackyard) Enter(g *Game, b2dWorld *box2d.B2World) {
+
+}
+
+func (m *MapBackyard) Leave(g *Game, b2dWorld *box2d.B2World) {
+
 }
 
 func (m *MapBackyard) BaseInfo() *WorldMapBaseData {

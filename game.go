@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/ByteArena/box2d"
 	"github.com/Dedda/rural-brewery/assets"
 	"github.com/hajimehoshi/ebiten/v2"
 	"log"
@@ -10,15 +11,19 @@ type Game struct {
 	player   *Player
 	world    *World
 	calendar *GameCalendar
+	b2dWorld *box2d.B2World
 }
 
 func NewGame(p *Player) (*Game, error) {
 	world, err := LoadWorld()
 	calendar := &GameCalendar{}
+	b2dWorld := box2d.MakeB2World(box2d.MakeB2Vec2(0, 0))
+	p.CreateBody(&b2dWorld)
 	return &Game{
 		player:   p,
 		world:    world,
 		calendar: calendar,
+		b2dWorld: &b2dWorld,
 	}, err
 }
 

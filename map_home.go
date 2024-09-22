@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/ByteArena/box2d"
 	"github.com/Dedda/rural-brewery/assets"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -22,6 +23,14 @@ type MapHome struct {
 
 func NewMapHome() *MapHome {
 	return &MapHome{}
+}
+
+func (m *MapHome) Enter(g *Game, b2dWorld *box2d.B2World) {
+
+}
+
+func (m *MapHome) Leave(g *Game, b2dWorld *box2d.B2World) {
+
 }
 
 func (m MapHome) BaseInfo() *WorldMapBaseData {

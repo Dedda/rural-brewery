@@ -1,6 +1,9 @@
 package main
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/ByteArena/box2d"
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 const (
 	GridCellSize = 16
@@ -31,6 +34,8 @@ func (w *World) GetMap(id string) (WorldMap, error) {
 }
 
 type WorldMap interface {
+	Enter(g *Game, b2dWorld *box2d.B2World)
+	Leave(g *Game, b2dWorld *box2d.B2World)
 	BaseInfo() *WorldMapBaseData
 	Update(g *Game, current bool) error
 	Draw(screen *ebiten.Image, g *Game)

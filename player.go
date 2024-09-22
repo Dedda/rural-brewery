@@ -1,5 +1,10 @@
 package main
 
+import (
+	"github.com/ByteArena/box2d"
+	"github.com/Dedda/rural-brewery/assets"
+)
+
 const (
 	inventorySize   = 32
 	playerBaseSpeed = 4
@@ -9,6 +14,7 @@ type Player struct {
 	name      string
 	inventory *Inventory
 	location  GlobalPosition
+	body      *box2d.B2Body
 }
 
 func NewPlayer(name string) *Player {
@@ -17,7 +23,17 @@ func NewPlayer(name string) *Player {
 		inventory: &Inventory{
 			items: [32]*InventoryItem{},
 		},
+		body: nil,
 	}
+}
+
+func (p *Player) CreateBody(world *box2d.B2World) {
+	bd := box2d.NewB2BodyDef()
+	body := world.CreateBody(bd)
+	shape := box2d.MakeB2PolygonShape()
+	shape.SetAsBox(float64(assets.PlayerImage.Bounds().Dx()), float64(assets.PlayerImage.Bounds().Dy()))
+	body.CreateFixture(&shape, 0.0)
+	p.body = body
 }
 
 type Inventory struct {
