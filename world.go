@@ -2,7 +2,7 @@ package main
 
 type GlobalPosition struct {
 	mapId    MapIdentifier
-	position LocalPosition
+	position Vec2F
 }
 
 type MapIdentifier struct {
@@ -10,25 +10,20 @@ type MapIdentifier struct {
 	y int
 }
 
-type LocalPosition struct {
-	x float64
-	y float64
+func (id *MapIdentifier) Left() MapIdentifier {
+	return MapIdentifier{id.x - 1, id.y}
 }
 
-func (p *LocalPosition) Left() LocalPosition {
-	return LocalPosition{p.x - 1, p.y}
+func (id *MapIdentifier) Right() MapIdentifier {
+	return MapIdentifier{id.x + 1, id.y}
 }
 
-func (p *LocalPosition) Right() LocalPosition {
-	return LocalPosition{p.x + 1, p.y}
+func (id *MapIdentifier) Up() MapIdentifier {
+	return MapIdentifier{id.x, id.y - 1}
 }
 
-func (p *LocalPosition) Up() LocalPosition {
-	return LocalPosition{p.x, p.y - 1}
-}
-
-func (p *LocalPosition) Down() LocalPosition {
-	return LocalPosition{p.x - 1, p.y + 1}
+func (id *MapIdentifier) Down() MapIdentifier {
+	return MapIdentifier{id.x - 1, id.y + 1}
 }
 
 type World struct {

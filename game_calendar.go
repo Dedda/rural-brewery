@@ -31,7 +31,6 @@ func (c *GameCalendar) Update() {
 	if c.counter >= ticksPerMinute {
 		c.counter -= ticksPerMinute
 		c.minute++
-		fmt.Println(fmt.Sprintf("%s, %d of %s, %s", weekdays[c.month], c.day+1, months[c.month], c.FormatTimeOfDay()))
 	}
 	if c.minute >= minutesPerHour {
 		c.minute -= minutesPerHour
@@ -63,6 +62,6 @@ func (c *GameCalendar) NameOfMonth() string {
 	return months[c.month%12]
 }
 
-func (g *GameCalendar) Draw(screen *ebiten.Image, position Point2F) {
+func (g *GameCalendar) Draw(screen *ebiten.Image, position Vec2F) {
 
 }

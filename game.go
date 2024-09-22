@@ -28,18 +28,8 @@ func (g *Game) Update() (GameState, error) {
 }
 
 func (g *Game) HandleInput() (GameState, error) {
-	if ebiten.IsKeyPressed(ebiten.KeyW) {
-		g.player.location.position.y -= playerBaseSpeed
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.player.location.position.y += playerBaseSpeed
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.player.location.position.x -= playerBaseSpeed
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.player.location.position.x += playerBaseSpeed
-	}
+	playerMovement := GetPlayerMovementInput().MulF64(playerBaseSpeed)
+	g.player.location.position = g.player.location.position.AddVec2F(playerMovement)
 	return nil, nil
 }
 
@@ -62,7 +52,7 @@ func (g *Game) DrawUi(screen *ebiten.Image) {
 	const (
 		calendarSize = 96
 	)
-	calendarPosition := Point2F{
+	calendarPosition := Vec2F{
 		x: gameWidth - calendarSize,
 		y: gameHeight - calendarSize,
 	}

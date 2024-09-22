@@ -2,7 +2,7 @@ package main
 
 const (
 	inventorySize   = 32
-	playerBaseSpeed = 2
+	playerBaseSpeed = 4
 )
 
 type Player struct {
