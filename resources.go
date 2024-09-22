@@ -16,9 +16,6 @@ var (
 	//go:embed assets/player.png
 	Player_png  []byte
 	PlayerImage *ebiten.Image
-
-	//go:embed assets/maps.json
-	Maps_json []byte
 )
 
 func init() {
@@ -32,5 +29,4 @@ func init() {
 		log.Fatal(err)
 	}
 	PlayerImage = ebiten.NewImageFromImage(img)
-
 }

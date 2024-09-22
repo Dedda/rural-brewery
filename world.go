@@ -1,6 +1,6 @@
 package main
 
-import "encoding/json"
+import "github.com/hajimehoshi/ebiten/v2"
 
 type GlobalPosition struct {
 	mapId    string
@@ -12,27 +12,34 @@ type World struct {
 }
 
 func LoadWorld() (*World, error) {
-	var maps map[string]WorldMap
-	err := json.Unmarshal(Maps_json, &maps)
+	maps := make(map[string]WorldMap)
+	maps["home"] = NewMapHome()
 	return &World{
 		maps: maps,
-	}, err
+	}, nil
 }
 
-func (w *World) GetMap(id string) (*WorldMap, error) {
-	return nil, nil
+func (w *World) GetMap(id string) (WorldMap, error) {
+	worldMap := w.maps[id]
+	return worldMap, nil
 }
 
-type WorldMap struct {
-	Identifier  string        `json:"id"`
-	Name        string        `json:"name"`
-	Size        Vec2F         `json:"size"`
-	Teleporters []*Teleporter `json:"teleporters"`
+type WorldMap interface {
+	BaseInfo() *WorldMapBaseData
+	Update(g *Game, current bool) error
+	Draw(screen *ebiten.Image, g *Game)
 }
 
 type Teleporter struct {
-	TopLeft        Vec2F  `json:"topLeft"`
-	BottomRight    Vec2F  `json:"bottomRight"`
-	DestinationMap string `json:"destinationMap"`
-	Destination    Vec2F  `json:"destination"`
+	TopLeft        Vec2F
+	BottomRight    Vec2F
+	DestinationMap string
+	Destination    Vec2F
+}
+
+type WorldMapBaseData struct {
+	id          string
+	name        string
+	size        Vec2F
+	teleporters []Teleporter
 }

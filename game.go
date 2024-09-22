@@ -18,12 +18,18 @@ func NewGame(p *Player) (*Game, error) {
 	}, err
 }
 
-func (g *Game) CurrentMap() (*WorldMap, error) {
+func (g *Game) CurrentMap() (WorldMap, error) {
 	return g.world.GetMap(g.player.location.mapId)
 }
 
 func (g *Game) Update() (GameState, error) {
 	g.calendar.Update()
+	for id, m := range g.world.maps {
+		err := m.Update(g, id == g.player.location.mapId)
+		if err != nil {
+			return nil, err
+		}
+	}
 	return g.HandleInput()
 }
 

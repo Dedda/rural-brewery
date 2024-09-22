@@ -6,8 +6,8 @@ import (
 )
 
 type Vec2F struct {
-	X float64 `json:"x"`
-	Y float64 `json:"y"`
+	X float64
+	Y float64
 }
 
 func (v Vec2F) AddVec2F(o Vec2F) Vec2F {
