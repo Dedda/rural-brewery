@@ -1,7 +1,8 @@
 package main
 
 const (
-	inventorySize = 32
+	inventorySize   = 32
+	playerBaseSpeed = 2
 )
 
 type Player struct {
@@ -24,6 +25,23 @@ type Inventory struct {
 }
 
 type InventoryItem struct {
-	item   *Item
+	item   Item
 	amount int
+}
+
+func (i *InventoryItem) AddInventoryItem(o *InventoryItem) *InventoryItem {
+	if i.item.Id() != o.item.Id() {
+		return o
+	}
+	total := i.amount + o.amount
+	if total <= i.item.MaxStackSize() {
+		i.amount = total
+		return nil
+	}
+	i.amount = i.item.MaxStackSize()
+	remainder := total - i.item.MaxStackSize()
+	return &InventoryItem{
+		item:   i.item,
+		amount: remainder,
+	}
 }

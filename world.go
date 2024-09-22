@@ -32,12 +32,28 @@ func (p *LocalPosition) Down() LocalPosition {
 }
 
 type World struct {
+	mapCache []*WorldMap
 }
 
-func (w *World) LoadMap(id MapIdentifier) *WorldMap {
-	return nil
+func (w *World) LoadMap(id MapIdentifier) (*WorldMap, error) {
+	if len(w.mapCache) > 5 {
+		w.mapCache = w.mapCache[len(w.mapCache):]
+	}
+	loaded, err := w.LoadMap(id)
+	w.mapCache = append(w.mapCache, loaded)
+	return loaded, err
+}
+
+func (w *World) GetMap(id MapIdentifier) (*WorldMap, error) {
+	for _, worldMap := range w.mapCache {
+		if worldMap.identifier == id {
+			return worldMap, nil
+		}
+	}
+	return w.LoadMap(id)
 }
 
 type WorldMap struct {
 	identifier MapIdentifier
+	name       string
 }

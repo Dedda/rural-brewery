@@ -19,9 +19,10 @@ type GameWrapper struct {
 }
 
 func NewGameWrapper() (*GameWrapper, error) {
-	splash, err := NewSplashScreen()
+	player := NewPlayer("Player 1")
+	game, err := NewGame(player)
 	return &GameWrapper{
-		state: splash,
+		state: game,
 	}, err
 }
 
