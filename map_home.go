@@ -1,6 +1,9 @@
 package main
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/Dedda/rural-brewery/assets"
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 var (
 	homeData = WorldMapBaseData{
@@ -29,4 +32,7 @@ func (m MapHome) Update(g *Game, current bool) error {
 	return nil
 }
 
-func (m MapHome) Draw(screen *ebiten.Image, g *Game) {}
+func (m MapHome) Draw(screen *ebiten.Image, g *Game) {
+	op := &ebiten.DrawImageOptions{}
+	screen.DrawImage(assets.BackgroundHome, op)
+}

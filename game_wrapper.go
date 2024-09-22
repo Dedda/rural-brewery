@@ -20,6 +20,7 @@ type GameWrapper struct {
 
 func NewGameWrapper() (*GameWrapper, error) {
 	player := NewPlayer("Player 1")
+	player.location.mapId = "home"
 	game, err := NewGame(player)
 	return &GameWrapper{
 		state: game,

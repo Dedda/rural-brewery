@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Dedda/rural-brewery/assets"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
@@ -84,7 +85,7 @@ func (m *MainMenu) Draw(screen *ebiten.Image) {
 func DrawHeader(screen *ebiten.Image) {
 	headerText := "Rural Brewery"
 	headerFace := &text.GoTextFace{
-		Source: JacquardaBastarda9FaceSource,
+		Source: assets.JacquardaBastarda9FaceSource,
 		Size:   mainMenuHeaderSize,
 	}
 	op := &text.DrawOptions{}
@@ -99,7 +100,7 @@ func (m *MainMenu) DrawOptions(screen *ebiten.Image) {
 		titles[i] = option.title
 	}
 	face := &text.GoTextFace{
-		Source: JacquardaBastarda9FaceSource,
+		Source: assets.JacquardaBastarda9FaceSource,
 		Size:   mainMenuOptionSize,
 	}
 	for i, title := range titles {

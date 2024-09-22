@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Dedda/rural-brewery/assets"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 	"image/color"
@@ -33,7 +34,7 @@ func (s *SplashScreen) Draw(screen *ebiten.Image) {
 	y := 100 + yStep*float64(s.remainingTime)
 	headerText := "Rural Brewery"
 	headerFace := &text.GoTextFace{
-		Source: JacquardaBastarda9FaceSource,
+		Source: assets.JacquardaBastarda9FaceSource,
 		Size:   mainMenuHeaderSize,
 	}
 	op := &text.DrawOptions{}

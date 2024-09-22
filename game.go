@@ -1,6 +1,10 @@
 package main
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/Dedda/rural-brewery/assets"
+	"github.com/hajimehoshi/ebiten/v2"
+	"log"
+)
 
 type Game struct {
 	player   *Player
@@ -45,13 +49,19 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	g.DrawUi(screen)
 }
 
-func (g *Game) DrawBackground(screen *ebiten.Image) {}
+func (g *Game) DrawBackground(screen *ebiten.Image) {
+	m, err := g.world.GetMap(g.player.location.mapId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	m.Draw(screen, g)
+}
 
 func (g *Game) DrawPlayer(screen *ebiten.Image) {
 	position := g.player.location.position
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(position.X, position.Y)
-	screen.DrawImage(PlayerImage, op)
+	screen.DrawImage(assets.PlayerImage, op)
 }
 
 func (g *Game) DrawUi(screen *ebiten.Image) {
