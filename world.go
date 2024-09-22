@@ -1,54 +1,38 @@
 package main
 
+import "encoding/json"
+
 type GlobalPosition struct {
-	mapId    MapIdentifier
+	mapId    string
 	position Vec2F
 }
 
-type MapIdentifier struct {
-	x int
-	y int
-}
-
-func (id *MapIdentifier) Left() MapIdentifier {
-	return MapIdentifier{id.x - 1, id.y}
-}
-
-func (id *MapIdentifier) Right() MapIdentifier {
-	return MapIdentifier{id.x + 1, id.y}
-}
-
-func (id *MapIdentifier) Up() MapIdentifier {
-	return MapIdentifier{id.x, id.y - 1}
-}
-
-func (id *MapIdentifier) Down() MapIdentifier {
-	return MapIdentifier{id.x - 1, id.y + 1}
-}
-
 type World struct {
-	mapCache []*WorldMap
+	maps map[string]WorldMap
 }
 
-func (w *World) LoadMap(id MapIdentifier) (*WorldMap, error) {
-	if len(w.mapCache) > 5 {
-		w.mapCache = w.mapCache[len(w.mapCache):]
-	}
-	loaded, err := w.LoadMap(id)
-	w.mapCache = append(w.mapCache, loaded)
-	return loaded, err
+func LoadWorld() (*World, error) {
+	var maps map[string]WorldMap
+	err := json.Unmarshal(Maps_json, &maps)
+	return &World{
+		maps: maps,
+	}, err
 }
 
-func (w *World) GetMap(id MapIdentifier) (*WorldMap, error) {
-	for _, worldMap := range w.mapCache {
-		if worldMap.identifier == id {
-			return worldMap, nil
-		}
-	}
-	return w.LoadMap(id)
+func (w *World) GetMap(id string) (*WorldMap, error) {
+	return nil, nil
 }
 
 type WorldMap struct {
-	identifier MapIdentifier
-	name       string
+	Identifier  string        `json:"id"`
+	Name        string        `json:"name"`
+	Size        Vec2F         `json:"size"`
+	Teleporters []*Teleporter `json:"teleporters"`
+}
+
+type Teleporter struct {
+	TopLeft        Vec2F  `json:"topLeft"`
+	BottomRight    Vec2F  `json:"bottomRight"`
+	DestinationMap string `json:"destinationMap"`
+	Destination    Vec2F  `json:"destination"`
 }

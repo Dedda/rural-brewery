@@ -1,0 +1,20 @@
+{
+  "home": {
+    "id": "home",
+    "name": "Home",
+    "size": {
+      "x": 64,
+      "y": 48
+    },
+    "teleporters": []
+  },
+  "backyard": {
+    "id": "backyard",
+    "name": "Backyard",
+    "size": {
+      "x": 128,
+      "y": 96
+    },
+    "teleporters": []
+  }
+}

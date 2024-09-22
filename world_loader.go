@@ -1,5 +1,5 @@
 package main
 
-func LoadMap(id *MapIdentifier) (*WorldMap, error) {
+func LoadMap(id string) (*WorldMap, error) {
 	return nil, nil
 }

@@ -9,13 +9,13 @@ type Game struct {
 }
 
 func NewGame(p *Player) (*Game, error) {
-	world := &World{}
+	world, err := LoadWorld()
 	calendar := &GameCalendar{}
 	return &Game{
 		player:   p,
 		world:    world,
 		calendar: calendar,
-	}, nil
+	}, err
 }
 
 func (g *Game) CurrentMap() (*WorldMap, error) {
@@ -44,7 +44,7 @@ func (g *Game) DrawBackground(screen *ebiten.Image) {}
 func (g *Game) DrawPlayer(screen *ebiten.Image) {
 	position := g.player.location.position
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(position.x, position.y)
+	op.GeoM.Translate(position.X, position.Y)
 	screen.DrawImage(PlayerImage, op)
 }
 
@@ -53,8 +53,8 @@ func (g *Game) DrawUi(screen *ebiten.Image) {
 		calendarSize = 96
 	)
 	calendarPosition := Vec2F{
-		x: gameWidth - calendarSize,
-		y: gameHeight - calendarSize,
+		X: gameWidth - calendarSize,
+		Y: gameHeight - calendarSize,
 	}
 	g.calendar.Draw(screen, calendarPosition)
 }
