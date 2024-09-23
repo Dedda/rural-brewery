@@ -19,12 +19,15 @@ func NewGame(p *Player) (*Game, error) {
 	calendar := &GameCalendar{}
 	b2dWorld := box2d.MakeB2World(box2d.MakeB2Vec2(0, 0))
 	p.CreateBody(&b2dWorld)
-	return &Game{
+	game := Game{
 		player:   p,
 		world:    world,
 		calendar: calendar,
 		b2dWorld: &b2dWorld,
-	}, err
+	}
+	m, err := game.CurrentMap()
+	m.Enter(&game, &b2dWorld)
+	return &game, err
 }
 
 func (g *Game) CurrentMap() (WorldMap, error) {

@@ -79,3 +79,51 @@ func CenterTextHorizontally(msg *string, face *text.GoTextFace, containerWidth f
 	w, _ := text.Measure(*msg, face, 0)
 	return containerWidth/2 - w/2
 }
+
+func createMapBoundaries(world *box2d.B2World, size Vec2F) []*box2d.B2Body {
+	leftBodyDef := box2d.NewB2BodyDef()
+	leftBodyDef.Position = box2d.MakeB2Vec2(-1, 0)
+	leftBodyDef.Type = box2d.B2BodyType.B2_staticBody
+	leftBody := world.CreateBody(leftBodyDef)
+	leftBox := box2d.NewB2PolygonShape()
+	leftBox.SetAsBox(1, size.Y)
+	leftFixDef := box2d.MakeB2FixtureDef()
+	leftFixDef.Shape = leftBox
+	leftFixDef.Density = 1
+	leftBody.CreateFixtureFromDef(&leftFixDef)
+
+	upperBodyDef := box2d.NewB2BodyDef()
+	upperBodyDef.Position = box2d.MakeB2Vec2(0, 1)
+	upperBodyDef.Type = box2d.B2BodyType.B2_staticBody
+	upperBody := world.CreateBody(upperBodyDef)
+	upperBox := box2d.NewB2PolygonShape()
+	upperBox.SetAsBox(size.X, 1)
+	upperFixDef := box2d.MakeB2FixtureDef()
+	upperFixDef.Shape = upperBox
+	upperFixDef.Density = 1
+	upperBody.CreateFixtureFromDef(&upperFixDef)
+
+	rightBodyDef := box2d.NewB2BodyDef()
+	rightBodyDef.Position = box2d.MakeB2Vec2(size.X, 0)
+	rightBodyDef.Type = box2d.B2BodyType.B2_staticBody
+	rightBody := world.CreateBody(rightBodyDef)
+	rightBox := box2d.NewB2PolygonShape()
+	rightBox.SetAsBox(1, size.Y)
+	rightFixDef := box2d.MakeB2FixtureDef()
+	rightFixDef.Shape = rightBox
+	rightFixDef.Density = 1
+	rightBody.CreateFixtureFromDef(&rightFixDef)
+
+	lowerBodyDef := box2d.NewB2BodyDef()
+	lowerBodyDef.Position = box2d.MakeB2Vec2(0, size.Y)
+	lowerBodyDef.Type = box2d.B2BodyType.B2_staticBody
+	lowerBody := world.CreateBody(lowerBodyDef)
+	lowerBox := box2d.NewB2PolygonShape()
+	lowerBox.SetAsBox(size.X, 1)
+	lowerFixDef := box2d.MakeB2FixtureDef()
+	lowerFixDef.Shape = lowerBox
+	lowerFixDef.Density = 1
+	lowerBody.CreateFixtureFromDef(&lowerFixDef)
+
+	return []*box2d.B2Body{leftBody, upperBody, rightBody, lowerBody}
+}

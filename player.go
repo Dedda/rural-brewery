@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/ByteArena/box2d"
 	"github.com/Dedda/rural-brewery/assets"
 )
@@ -28,16 +29,25 @@ func NewPlayer(name string) *Player {
 }
 
 func (p *Player) CreateBody(world *box2d.B2World) {
-	bd := box2d.NewB2BodyDef()
-	bd.Type = box2d.B2BodyType.B2_dynamicBody
-	body := world.CreateBody(bd)
-	shape := box2d.MakeB2PolygonShape()
-	shape.SetAsBox(float64(assets.PlayerImage.Bounds().Dx()), float64(assets.PlayerImage.Bounds().Dy()))
+	fmt.Println("Creating player body...")
+	bodyDef := box2d.NewB2BodyDef()
+	bodyDef.Type = box2d.B2BodyType.B2_dynamicBody
+	bodyDef.Position = box2d.MakeB2Vec2(p.location.position.X, p.location.position.Y)
+	body := world.CreateBody(bodyDef)
+	box := box2d.NewB2PolygonShape()
+	width := float64(assets.PlayerImage.Bounds().Dx())
+	height := float64(assets.PlayerImage.Bounds().Dy())
+	box.Set([]box2d.B2Vec2{
+		box2d.MakeB2Vec2(0, 0),
+		box2d.MakeB2Vec2(width, 0),
+		box2d.MakeB2Vec2(width, height),
+		box2d.MakeB2Vec2(0, height),
+	}, 4)
+
 	fixtureDef := box2d.MakeB2FixtureDef()
-	fixtureDef.Shape = &shape
+	fixtureDef.Shape = box
+	fixtureDef.Density = 1
 	body.CreateFixtureFromDef(&fixtureDef)
-	body.SetFixedRotation(true)
-	body.SetTransform(box2d.B2Vec2{0, 0}, 0)
 	p.body = body
 }
 
