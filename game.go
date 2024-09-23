@@ -35,6 +35,7 @@ func (g *Game) CurrentMap() (WorldMap, error) {
 }
 
 func (g *Game) Update() (GameState, error) {
+	m := g.player.location.mapId
 	g.b2dWorld.Step(1.0/60, 8, 3)
 	g.player.location.position = Vec2FFromB2Vec2(g.player.body.GetPosition())
 	g.calendar.Update()
@@ -44,7 +45,17 @@ func (g *Game) Update() (GameState, error) {
 			return nil, err
 		}
 	}
-	return g.HandleInput()
+	newState, err := g.HandleInput()
+	if m != g.player.location.mapId {
+		oldMap, err := g.world.GetMap(m)
+		if err != nil {
+			log.Fatal(err)
+		}
+		oldMap.Leave(g, g.b2dWorld)
+		current, err := g.CurrentMap()
+		current.Enter(g, g.b2dWorld)
+	}
+	return newState, err
 }
 
 func (g *Game) HandleInput() (GameState, error) {
