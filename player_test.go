@@ -1,39 +1,32 @@
 package main
 
 import (
+	"github.com/Dedda/rural-brewery/items"
 	"github.com/go-test/deep"
 	"testing"
 )
 
-type TestItem struct{}
-
-func (i *TestItem) Id() int {
-	return 1
-}
-
-func (i *TestItem) Name() string {
-	return "TestItem"
-}
-
-func (i *TestItem) MaxStackSize() int {
-	return 12
+var testItem = items.Item{
+	Id:           123,
+	Name:         "Test item",
+	MaxStackSize: 12,
 }
 
 func TestAddInventoryItems(t *testing.T) {
 	first := &InventoryItem{
-		item:   &TestItem{},
+		item:   &testItem,
 		amount: 5,
 	}
 	second := &InventoryItem{
-		item:   &TestItem{},
+		item:   &testItem,
 		amount: 9,
 	}
 	expectedFirst := &InventoryItem{
-		item:   &TestItem{},
+		item:   &testItem,
 		amount: 12,
 	}
 	expectedRemainder := &InventoryItem{
-		item:   &TestItem{},
+		item:   &testItem,
 		amount: 2,
 	}
 	actualRemainder := first.AddInventoryItem(second)

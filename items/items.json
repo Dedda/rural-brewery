@@ -1,0 +1,22 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Water",
+    "maxStackSize": 1
+  },
+  "2": {
+    "id": 2,
+    "name": "Sugar",
+    "maxStackSize": 100
+  },
+  "3": {
+    "id": 3,
+    "name": "Lemon",
+    "maxStackSize": 100
+  },
+  "4": {
+    "id": 4,
+    "name": "Lemonade",
+    "maxStackSize": 100
+  }
+}

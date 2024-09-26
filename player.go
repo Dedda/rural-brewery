@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ByteArena/box2d"
 	"github.com/Dedda/rural-brewery/assets"
+	"github.com/Dedda/rural-brewery/items"
 )
 
 const (
@@ -56,21 +57,21 @@ type Inventory struct {
 }
 
 type InventoryItem struct {
-	item   Item
+	item   *items.Item
 	amount int
 }
 
 func (i *InventoryItem) AddInventoryItem(o *InventoryItem) *InventoryItem {
-	if i.item.Id() != o.item.Id() {
+	if i.item.Id != o.item.Id {
 		return o
 	}
 	total := i.amount + o.amount
-	if total <= i.item.MaxStackSize() {
+	if total <= i.item.MaxStackSize {
 		i.amount = total
 		return nil
 	}
-	i.amount = i.item.MaxStackSize()
-	remainder := total - i.item.MaxStackSize()
+	i.amount = i.item.MaxStackSize
+	remainder := total - i.item.MaxStackSize
 	return &InventoryItem{
 		item:   i.item,
 		amount: remainder,
